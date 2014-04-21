@@ -14,6 +14,9 @@
 # limitations under the License.
 #
 
+# inherit from the proprietary version
+-include vendor/samsung/k3gxx/BoardConfigVendor.mk
+
 LOCAL_PATH := device/samsung/k3gxx
 
 BOARD_VENDOR := samsung
@@ -44,11 +47,16 @@ TARGET_CPU_VARIANT := cortex-a15
 
 # Kernel
 TARGET_PREBUILT_KERNEL := device/samsung/k3gxx/recovery/zImage
+TARGET_KERNEL_CONFIG := exynos5422-k3g_00_defconfig
 
 # Kernel
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE := 2048
+
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x21000000 --dt device/samsung/k3gxx/recovery/dt.img --tags_offset 0x20000100
+#BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x21000000 --tags_offset 0x20000100
+#BOARD_KERNEL_SEPARATED_DT := true
+#BOARD_CUSTOM_BOOTIMG_MK := device/samsung/k3gxx/mkbootimg.mk
 
 # Boot animation
 TARGET_BOOTANIMATION_PRELOAD := true
@@ -66,33 +74,36 @@ BOARD_RECOVERYIMAGE_PARTITION_SIZE := 15728640
 BOARD_FLASH_BLOCK_SIZE := 4096
 
 # Recovery
-BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
-TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 BOARD_HAS_NO_SELECT_BUTTON := true
 TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/rootdir/etc/fstab.universal5422
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun0/file
-BOARD_RECOVERY_SWIPE := true
 
-# SELinux
-BOARD_SEPOLICY_DIRS += \
-    device/samsung/k3gxx/sepolicy
-
-BOARD_SEPOLICY_UNION := \
-    file_contexts \
-    device.te \
-    domain.te \
-    gpsd.te \
-    mediaserver.te \
-    surfaceflinger.te \
-    system.te
+#TWRP specific build flags
+DEVICE_RESOLUTION := 1080x1920
+RECOVERY_SDCARD_ON_DATA := true
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+#TW_BRIGHTNESS_PATH := "/sys/devices/mdp.0/qcom\x2cmdss_fb_primary.173/leds/lcd-backlight/brightness"
+#TW_MAX_BRIGHTNESS := 255
+TW_INTERNAL_STORAGE_PATH := "/data/media/0"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
+TW_EXTERNAL_STORAGE_PATH := "/external_sd"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
+TW_NO_REBOOT_BOOTLOADER := true
+TW_HAS_DOWNLOAD_MODE := true
+TW_NO_EXFAT_FUSE := false
+TW_NO_EXFAT := false
+#TW_INCLUDE_CRYPTO := true
+#TW_INCLUDE_CRYPTO_SAMSUNG := true
+#TW_CRYPTO_FS_TYPE := "ext4"
+#TW_CRYPTO_REAL_BLKDEV := "/dev/block/mmcblk0p29"
+#TW_CRYPTO_MNT_POINT := "/data"
+#TW_CRYPTO_FS_OPTIONS := "nosuid,nodev,noatime,noauto_da_alloc,discard,journal_async_commit,errors=panic"
+#TW_CRYPTO_FS_FLAGS := "0x00000406"
+#TW_CRYPTO_KEY_LOC := "footer"
+TW_NO_RTC := true
 
 # Charging mode
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
 BOARD_BATTERY_DEVICE_NAME := battery
-
-# Releasetools
-#TARGET_RELEASETOOLS_EXTENSIONS := $(LOCAL_PATH)
-
-# inherit from the proprietary version
--include vendor/samsung/k3gxx/BoardConfigVendor.mk

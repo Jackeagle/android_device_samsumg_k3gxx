@@ -1,15 +1,12 @@
 $(call inherit-product, device/samsung/k3gxx/full_k3gxx.mk)
 
 # Inherit some common CM stuff
-$(call inherit-product, vendor/cm/config/gsm.mk)
-
-# Enhanced NFC
-$(call inherit-product, vendor/cm/config/nfc_enhanced.mk)
+$(call inherit-product, vendor/omni/config/gsm.mk)
 
 # Inherit some common CM stuff.
-$(call inherit-product, vendor/cm/config/common_full_phone.mk)
+$(call inherit-product, vendor/omni/config/common.mk)
 
-PRODUCT_NAME := cm_k3gxx
+PRODUCT_NAME := omni_k3gxx
 PRODUCT_DEVICE := k3gxx
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
